@@ -68,6 +68,11 @@ public class Borsa {
 		}
 		return a;
 	}
+	
+	public String getContenuto() {
+		return this.toString();
+	}
+	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		if (!this.isEmpty()) {

@@ -16,7 +16,7 @@ public class Partita {
 
 	private boolean finita;
 	private Labirinto labirinto;
-	public Giocatore player;
+	private Giocatore player;
 	
 	
 	public Partita(){
@@ -35,7 +35,8 @@ public class Partita {
 	 * @return vero se partita vinta
 	 */
 	public boolean vinta() {
-		return this.getLabirinto().getStanzaCorrente()== this.getLabirinto().getStanzaVincente();
+		return this.getLabirinto().getStanzaCorrente().equals(this.getLabirinto().getStanzaVincente());
+		
 	}
 
 	/**

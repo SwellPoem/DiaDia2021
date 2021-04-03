@@ -1,29 +1,60 @@
 package it.uniroma3.diadiatest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import it.uniroma3.diadia2021.Partita;
+import it.uniroma3.diadia2021.ambienti.Stanza;
 
 public class PartitaTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+	private Partita partita;
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
+		this.partita = new Partita();
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testPartitaVinta() {
+		this.partita.getLabirinto().setStanzaCorrente(this.partita.getLabirinto().getStanzaVincente());
+		assertTrue(this.partita.vinta());
+	}
+	
+	@Test
+	public void testPartitaNonVinta() {
+		this.partita.getLabirinto().setStanzaCorrente(new Stanza("inutile"));
+		assertFalse(this.partita.vinta());
+		
 	}
 
+	@Test
+	public void testPartitaFinita() {
+		this.partita.getLabirinto().setStanzaCorrente(this.partita.getLabirinto().getStanzaVincente());
+		assertTrue(this.partita.isFinita());
+	}
+	
+	@Test
+	public void testPartitaFinitaPercfu() {
+		this.partita.getPlayer().setCfu(0);
+		assertTrue(this.partita.isFinita());
+	}
+	
+	@Test
+	public void testPartitaFinitaForzata() {
+		this.partita.setFinita();
+		assertTrue(this.partita.isFinita());	
+	}
 }
+
+
+
+
+
+
+
+
