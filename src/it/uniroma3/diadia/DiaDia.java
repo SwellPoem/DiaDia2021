@@ -1,13 +1,9 @@
-package it.uniroma3.diadia;
+package it.uniroma3.diadia2021;
 
 
-import java.util.Scanner;
-
-import it.uniroma3.diadia2021.ambienti.Labirinto;
 import it.uniroma3.diadia2021.ambienti.Stanza;
 import it.uniroma3.diadia2021.attrezzi.Attrezzo;
-import it.uniroma3.diadia2021.comandi.Comando;
-import it.uniroma3.diadia2021.giocatore.Giocatore;
+import it.uniroma3.diadia2021.comandi.Comando1;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -28,24 +24,23 @@ public class DiaDia {
 			"puoi raccoglierli, usarli, posarli quando ti sembrano inutili\n" +
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
-	
-	static final private String[] elencoComandi = {"vai", "aiuto", "fine"};
+
+	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
 
 	private Partita partita;
+	private IOConsole io;
 
-	public DiaDia() {
+	public DiaDia(IOConsole io) {
 		this.partita = new Partita();
+		this.io = io;
 	}
 
-	@SuppressWarnings("resource")
 	public void gioca() {
 		String istruzione; 
-		Scanner scannerDiLinee;
 
-		System.out.println(MESSAGGIO_BENVENUTO);
-		scannerDiLinee = new Scanner(System.in);		
+		this.io.mostraMessaggio(MESSAGGIO_BENVENUTO);
 		do		
-			istruzione = scannerDiLinee.nextLine();
+			istruzione = this.io.leggiRiga();
 		while (!processaIstruzione(istruzione));
 	}   
 
@@ -56,69 +51,94 @@ public class DiaDia {
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
 	 */
 	private boolean processaIstruzione(String istruzione) {
-		Comando comandoDaEseguire = new Comando(istruzione);
+		Comando1 comandoDaEseguire = new Comando1(istruzione);
+		if (comandoDaEseguire.getNome() == null) {
+			this.io.mostraMessaggio("Inserisci un comando valido");
+		}
 		
-		if(comandoDaEseguire.getNome()!=null) {
-			
-		if (comandoDaEseguire.getNome().equals("fine")) {
+		else if (comandoDaEseguire.getNome().equals("fine")) {
 			this.fine(); 
 			return true;
-		} else if (comandoDaEseguire.getNome().equals("vai"))
+		} 
+
+		else if (comandoDaEseguire.getNome().equals("vai")) {
 			this.vai(comandoDaEseguire.getParametro());
-		else if (comandoDaEseguire.getNome().equals("aiuto"))
+		}
+
+		else if (comandoDaEseguire.getNome().equals("aiuto")) {
 			this.aiuto();
-		else if (comandoDaEseguire.getNome().equals("prendi"))
+		}
+
+		else if (comandoDaEseguire.getNome().equals("prendi")) {
 			this.prendi(comandoDaEseguire.getParametro());
-		else if (comandoDaEseguire.getNome().equals("posa"))
+		}
+
+		else if (comandoDaEseguire.getNome().equals("posa")) {
 			this.posa(comandoDaEseguire.getParametro());
+		}
+
 		else
-			System.out.println("Comando sconosciuto");
-		if (this.partita.vinta()) {
-			System.out.println("Hai vinto!");
+			this.io.mostraMessaggio("Comando sconosciuto");
+
+		if (this.partita.isFinita()) {
+
+			if (this.partita.getPlayer().getCfu()==0) {
+				this.io.mostraMessaggio("Hai finito i CFU!");
+			}
+
+			else if (this.partita.vinta()) {
+				this.io.mostraMessaggio("Hai vinto!");
+			}
 			return true;
-		} else
-			return false;
-	}
+		}
 		else
-			System.out.println("non hai inserito nulla");
-		return false;
-	}
+			return false;
+	}   
 
 	private void posa(String attrezzo) {
 		if(attrezzo == null) {
-			System.out.println("che cosa vuoi poosare?");
+			this.io.mostraMessaggio("che cosa vuoi poosare?");
 		}
-		if(!this.partita.getPlayer().getSatchel().hasAttrezzo(attrezzo)) {
-			System.out.println("non hai questo attrezzo nell'inventario");
-			return;
+		else {
+
+
+			if(!this.partita.getPlayer().getSatchel().hasAttrezzo(attrezzo)) {
+				this.io.mostraMessaggio("non hai questo attrezzo nell'inventario");
+				return;
+			}
+			Attrezzo a = this.partita.getPlayer().getSatchel().removeAttrezzo(attrezzo);
+			this.partita.getLabirinto().getStanzaCorrente().addAttrezzo(a);
+			this.io.mostraMessaggio("attrezzo posato");
+			this.io.mostraMessaggio(partita.getLabirinto().getStanzaCorrente().getDescrizione());
+			this.io.mostraMessaggio("Peso della borsa: " + this.partita.getPlayer().getSatchel().getPeso() + "kg");
 		}
-		Attrezzo a = this.partita.getPlayer().getSatchel().removeAttrezzo(attrezzo);
-		this.partita.getLabirinto().getStanzaCorrente().addAttrezzo(a);
-		System.out.println("attrezzo posato");
 	}
 
 	private void prendi(String attrezzo) {
 		if(attrezzo == null) {
-			System.out.println("che cosa vuoi prendere?");
+			this.io.mostraMessaggio("che cosa vuoi prendere?");
 		}
-		if(!this.partita.getLabirinto().getStanzaCorrente().hasAttrezzo(attrezzo)) {
-			System.out.println("quello che stai cercando non c'è qui");
-			return;
+		else {
+			if(!this.partita.getLabirinto().getStanzaCorrente().hasAttrezzo(attrezzo)) {
+				this.io.mostraMessaggio("quello che stai cercando non c'Ã¨ qui");
+				return;
+			}
+			Attrezzo a = this.partita.getLabirinto().getStanzaCorrente().getAttrezzo(attrezzo);
+			this.partita.getPlayer().getSatchel().addAttrezzo(a);
+			this.partita.getLabirinto().getStanzaCorrente().removeAttrezzo(a);
+			this.io.mostraMessaggio("attrezzo preso");
+			this.io.mostraMessaggio(partita.getLabirinto().getStanzaCorrente().getDescrizione());
+			this.io.mostraMessaggio("Peso della borsa: " + this.partita.getPlayer().getSatchel().getPeso() + "kg");
 		}
-		Attrezzo a = this.partita.getLabirinto().getStanzaCorrente().getAttrezzo(attrezzo);
-		this.partita.getPlayer().getSatchel().addAttrezzo(a);
-		this.partita.getLabirinto().getStanzaCorrente().removeAttrezzo(a);
-		System.out.println("attrezzo preso");
 	}
-
 
 	/**
 	 * Stampa informazioni di aiuto.
 	 */
 	private void aiuto() {
 		for(int i=0; i< elencoComandi.length; i++) 
-			System.out.print(elencoComandi[i]+" ");
-		System.out.println();
+			this.io.mostraMessaggio(elencoComandi[i]+" ");
+		this.io.mostraMessaggio(" ");
 	}
 
 	/**
@@ -127,29 +147,30 @@ public class DiaDia {
 	 */
 	private void vai(String direzione) {
 		if(direzione==null)
-			System.out.println("Dove vuoi andare ?");
+			this.io.mostraMessaggio("Dove vuoi andare ?");
 		Stanza prossimaStanza = null;
 		prossimaStanza = this.partita.getLabirinto().getStanzaCorrente().getStanzaAdiacente(direzione);
 		if (prossimaStanza == null)
-			System.out.println("Direzione inesistente");
+			this.io.mostraMessaggio("Direzione inesistente");
 		else {
 			this.partita.getLabirinto().setStanzaCorrente(prossimaStanza);
 			int cfu = this.partita.getPlayer().getCfu();
 			this.partita.getPlayer().setCfu(--cfu);
 		}
-		System.out.println(partita.getLabirinto().getStanzaCorrente().getDescrizione());
-		System.out.println("CFU rimasti: " +this.partita.getPlayer().getCfu());
+		this.io.mostraMessaggio(partita.getLabirinto().getStanzaCorrente().getDescrizione());
+		this.io.mostraMessaggio("CFU rimasti: " +this.partita.getPlayer().getCfu());
 	}
 
 	/**
 	 * Comando "Fine".
 	 */
 	private void fine() {
-		System.out.println("Grazie di aver giocato!");  // si desidera smettere
+		this.io.mostraMessaggio("ciao");  // si desidera smettere
 	}
 
 	public static void main(String[] argc) {
-		DiaDia gioco = new DiaDia();
+		IOConsole io = new IOConsole();
+		DiaDia gioco = new DiaDia(io);
 		gioco.gioca();
 	}
 }
