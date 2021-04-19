@@ -1,13 +1,14 @@
 package it.uniroma3.diadia2021.comandi;
 
-import it.uniroma3.diadia2021.IOConsole;
+import it.uniroma3.diadia2021.IO;
 import it.uniroma3.diadia2021.Partita;
 import it.uniroma3.diadia2021.attrezzi.Attrezzo;
 
 public class ComandoPrendi implements Comando {
 
-	private IOConsole io;
+	private IO io;
 	private String attrezzo;
+	private String prendi;
 	
 	
 	@Override
@@ -24,9 +25,7 @@ public class ComandoPrendi implements Comando {
 			partita.getPlayer().getSatchel().addAttrezzo(a);
 			partita.getLabirinto().getStanzaCorrente().removeAttrezzo(a);
 			this.io.mostraMessaggio("attrezzo preso");
-			this.io.mostraMessaggio(partita.getLabirinto().getStanzaCorrente().getDescrizione());
-			this.io.mostraMessaggio("Peso della borsa: " + 
-			partita.getPlayer().getSatchel().getPeso() + "kg");
+			this.io.mostraMessaggio("Peso della borsa: " + partita.getPlayer().getSatchel().getPeso() + "kg");
 		}
 	}
 
@@ -34,6 +33,21 @@ public class ComandoPrendi implements Comando {
 	public void setParametro(String parametro) {
 		this.attrezzo = parametro;
 
+	}
+
+	@Override
+	public void setIO(IO io) {
+		this.io = io;
+	}
+
+	@Override
+	public String getNome() {
+		return this.prendi;
+	}
+
+	@Override
+	public String getParametro() {
+		return this.attrezzo;
 	}
 
 }

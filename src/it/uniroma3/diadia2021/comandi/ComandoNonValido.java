@@ -1,11 +1,12 @@
 package it.uniroma3.diadia2021.comandi;
 
-import it.uniroma3.diadia2021.IOConsole;
+import it.uniroma3.diadia2021.IO;
 import it.uniroma3.diadia2021.Partita;
 
 public class ComandoNonValido implements Comando {
 
-	private IOConsole io;
+	private IO io;
+	private String nonValido;
 	
 	@Override
 	public void esegui(Partita partita) {
@@ -14,6 +15,21 @@ public class ComandoNonValido implements Comando {
 
 	@Override
 	public void setParametro(String parametro) {
+	}
+
+	@Override
+	public void setIO(IO io) {
+		this.io = io;
+	}
+
+	@Override
+	public String getNome() {
+		return this.nonValido;
+	}
+
+	@Override
+	public String getParametro() {
+		return null;
 	}
 
 }

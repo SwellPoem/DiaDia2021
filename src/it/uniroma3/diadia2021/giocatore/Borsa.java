@@ -56,18 +56,21 @@ public class Borsa {
 		return this.getAttrezzo(nomeAttrezzo)!=null;
 	}
 
-	public Attrezzo removeAttrezzo(String attrezzo) {
-		Attrezzo a = null;
-		int i=0;
-		while(i < this.attrezzi.length && a == null) {
-			if(this.attrezzi[i] != null && this.attrezzi[i].getNome().equals(attrezzo)) {
-				a = this.attrezzi[i];
-				this.attrezzi[i]= null;
-			}
-			i++;
-		}
-		return a;
-	}
+	public Attrezzo removeAttrezzo(String nomeAttrezzo) {
+        Attrezzo a = null;
+        for (int i= 0; i<this.numeroAttrezzi; i++) {
+            if(this.attrezzi[i].getNome().equals(nomeAttrezzo)) {
+                a = this.attrezzi[i];
+                if(i == (this.numeroAttrezzi-1))
+                    this.attrezzi[i] = null;
+                else
+                    this.attrezzi[i] = this.attrezzi[i+1];
+                this.numeroAttrezzi--;
+                return a;
+            }        
+        }    
+        return a;
+    }
 	
 	public String getContenuto() {
 		return this.toString();
