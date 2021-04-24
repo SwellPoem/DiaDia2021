@@ -27,6 +27,7 @@ public class ComandoPosaTest {
 		this.partita.getPlayer().getSatchel().addAttrezzo(attrezzoDaPosare);
 	}
 
+	
 	@Test
 	public void testEseguiAttrezzoNonInBorsa() {
 		String assente = "attrezzoNonInBorsa";

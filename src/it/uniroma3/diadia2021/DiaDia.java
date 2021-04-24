@@ -2,7 +2,7 @@ package it.uniroma3.diadia2021;
 
 
 import it.uniroma3.diadia2021.comandi.Comando;
-import it.uniroma3.diadia2021.comandi.FabbricaDiComadiFisarmonica;
+import it.uniroma3.diadia2021.comandi.FabbricaDiComandiFisarmonica;
 import it.uniroma3.diadia2021.comandi.FabbricaDiComandi;
 
 /**
@@ -46,7 +46,7 @@ public class DiaDia {
 
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire;
-		FabbricaDiComandi factory = new FabbricaDiComadiFisarmonica();
+		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();
 		comandoDaEseguire = factory.costruisciComando(istruzione, this.io);
 		comandoDaEseguire.esegui(this.partita);
 		if(this.partita.vinta())

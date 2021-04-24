@@ -11,7 +11,6 @@ import it.uniroma3.diadia2021.IOConsole;
 import it.uniroma3.diadia2021.Partita;
 import it.uniroma3.diadia2021.ambienti.Stanza;
 import it.uniroma3.diadia2021.comandi.Comando;
-import it.uniroma3.diadia2021.comandi.ComandoFine;
 import it.uniroma3.diadia2021.comandi.ComandoVai;
 import it.uniroma3.diadia2021.fixture.Fixture;
 import it.uniroma3.diadia2021test.IOSimulator;
