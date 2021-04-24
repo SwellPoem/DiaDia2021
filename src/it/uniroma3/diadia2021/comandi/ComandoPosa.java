@@ -8,7 +8,7 @@ public class ComandoPosa implements Comando {
 
 	private IO io;
 	private String attrezzo;
-	private String posa;
+	private final String POSA = "posa";
 
 	@Override
 	public void esegui(Partita partita) {
@@ -43,7 +43,7 @@ public class ComandoPosa implements Comando {
 
 	@Override
 	public String getNome() {
-		return this.posa;
+		return this.POSA;
 	}
 
 	@Override

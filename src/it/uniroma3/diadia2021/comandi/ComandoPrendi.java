@@ -8,7 +8,7 @@ public class ComandoPrendi implements Comando {
 
 	private IO io;
 	private String attrezzo;
-	private String prendi;
+	private final String PRENDI = "prendi";
 	
 	
 	@Override
@@ -42,7 +42,7 @@ public class ComandoPrendi implements Comando {
 
 	@Override
 	public String getNome() {
-		return this.prendi;
+		return this.PRENDI;
 	}
 
 	@Override

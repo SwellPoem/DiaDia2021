@@ -8,7 +8,7 @@ public class ComandoVai implements Comando {
 
 	private String direzione;
 	private IO io;
-	private String vai;
+	final private String VAI = "vai";
 	
 	@Override
 	public void esegui(Partita partita) {
@@ -43,7 +43,7 @@ public class ComandoVai implements Comando {
 
 	@Override
 	public String getNome() {
-		return this.vai;
+		return this.VAI;
 	}
 
 	@Override
