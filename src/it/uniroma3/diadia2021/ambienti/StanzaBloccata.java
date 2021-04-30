@@ -34,11 +34,13 @@ public class StanzaBloccata extends Stanza {
 
 	@Override
 	public String getDescrizione() {
-		if(!this.hasAttrezzo(this.sbloccante)) {
-			return "la stanza ha un uscita bloccata\n"+ this.toString();
+		if(!this.hasAttrezzo(sbloccante)) {
+			StringBuilder s = new StringBuilder();
+			s.append("questa stanza ha un'uscita bloccata... ");
+			s.append("\n" + this.direzioneBloccata + " resterà bloccata se non hai " + this.sbloccante);
+			return s.toString();
 		}
-		else {
-			return this.toString();
-		}
+		
+		return this.toString();
 	}
 }

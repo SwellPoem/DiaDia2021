@@ -13,7 +13,7 @@ public class StanzaBuia extends Stanza {
 	@Override
 	public String getDescrizione() {
 		if(!this.hasAttrezzo(this.rgb)) {
-			return "fai come emily";
+			return "qui è tutto buio";
 		}
 		else {
 			return this.toString();

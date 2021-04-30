@@ -27,25 +27,25 @@ public class StanzaBuiaTest {
 
 	@Test
 	public void testStanzaBuia() {
-		assertEquals("fai come emily", stanzaBuia.getDescrizione());
+		assertEquals("qui è tutto buio", stanzaBuia.getDescrizione());
 	}
 
 	@Test
 	public void testStanzaBuiaNonPiuBuia() {
 		stanzaBuia.addAttrezzo(oggettoChiave);
-		assertNotEquals("fai come emily", stanzaBuia.getDescrizione());
+		assertNotEquals("qui è tutto buio", stanzaBuia.getDescrizione());
 	}
 
 	@Test
 	public void testStanzaBuiaDopoAverRimossoOggettoChiave() {
 		stanzaBuia.removeAttrezzo(oggettoChiave);
-		assertEquals("fai come emily", stanzaBuia.getDescrizione());
+		assertEquals("qui è tutto buio", stanzaBuia.getDescrizione());
 	}
 
 	@Test
 	public void testStanzaBuiaConOggettoNonChiave() {
 		stanzaBuia.addAttrezzo(attrezzoNonChiave);
-		assertEquals("fai come emily", stanzaBuia.getDescrizione());
+		assertEquals("qui è tutto buio", stanzaBuia.getDescrizione());
 	}
 
 }

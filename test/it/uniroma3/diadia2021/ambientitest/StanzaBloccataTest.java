@@ -30,26 +30,26 @@ public class StanzaBloccataTest {
 	
 	//test di una stanza non bloccata con stanza null adiacente  nella direzione bloccata
 	@Test
-	public void testGetStanzaAdiacenteStanzaNull() {
+	public void testStanzaNull() {
 		stanzaCorrente.impostaStanzaAdiacente(direzioneBloccata, null);
 		assertNull(stanzaCorrente.getStanzaAdiacente("direzioneBloccata"));
 	}
 	@Test
-	public void testGetStanzaAdiacenteStanzaBloccataOggettoSbloccante() {
+	public void testStanzaBloccataOggettoSbloccante() {
 		stanzaCorrente.impostaStanzaAdiacente("direzioneBloccata", stanzaBloccata);
 		stanzaCorrente.addAttrezzo(attrezzoSbloccante);
 		assertEquals(stanzaBloccata, stanzaCorrente.getStanzaAdiacente("direzioneBloccata"));
 	}
 	
 	@Test
-	public void testGetStanzaAdiacenteStanzaBloccataAdiacenteOggettoNonSbloccante() {
+	public void testStanzaBloccataAdiacenteOggettoNonSbloccante() {
 		stanzaCorrente.impostaStanzaAdiacente("direzioneBloccata", stanzaBloccata);
 		stanzaCorrente.addAttrezzo(attrezzoNonSbloccante);
 		assertEquals(stanzaBloccata, stanzaCorrente.getStanzaAdiacente("direzioneBloccata"));
 	}
 
 	@Test
-	public void testGetStanzaAdiacenteDirezioneNonBloccata() {
+	public void testDirezioneNonBloccata() {
 		stanzaCorrente.impostaStanzaAdiacente("direzioneNonBloccata",stanzaNonBloccata);
 		assertEquals(stanzaNonBloccata, stanzaCorrente.getStanzaAdiacente("direzioneNonBloccata"));	
 	}
