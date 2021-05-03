@@ -17,13 +17,13 @@ public class ComandoPrendi implements Comando {
 			this.io.mostraMessaggio("che cosa vuoi prendere?");
 		}
 		else {
-			if(!partita.getLabirinto().getStanzaCorrente().hasAttrezzo(attrezzo)) {
+			if(!partita.getLabirinto().getStanzaIniziale().hasAttrezzo(attrezzo)) {
 				this.io.mostraMessaggio("quello che stai cercando non c'è qui");
 				return;
 			}
-			Attrezzo a = partita.getLabirinto().getStanzaCorrente().getAttrezzo(attrezzo);
+			Attrezzo a = partita.getLabirinto().getStanzaIniziale().getAttrezzo(attrezzo);
 			partita.getPlayer().getSatchel().addAttrezzo(a);
-			partita.getLabirinto().getStanzaCorrente().removeAttrezzo(a);
+			partita.getLabirinto().getStanzaIniziale().removeAttrezzo(a);
 			this.io.mostraMessaggio("attrezzo preso");
 			this.io.mostraMessaggio("Peso della borsa: " + partita.getPlayer().getSatchel().getPeso() + "kg");
 		}

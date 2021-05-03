@@ -18,7 +18,7 @@ public class LabirintoTest {
 
 	@Test
 	public void testGetStanzaCorrente() {
-		assertNotNull(this.labirinto.getStanzaCorrente());
+		assertNotNull(this.labirinto.getStanzaIniziale());
 	}
 
 	@Test

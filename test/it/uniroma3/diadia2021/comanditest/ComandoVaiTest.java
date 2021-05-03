@@ -9,6 +9,7 @@ import org.junit.Test;
 import it.uniroma3.diadia2021.DiaDia;
 import it.uniroma3.diadia2021.IOConsole;
 import it.uniroma3.diadia2021.Partita;
+import it.uniroma3.diadia2021.ambienti.Labirinto;
 import it.uniroma3.diadia2021.ambienti.Stanza;
 import it.uniroma3.diadia2021.comandi.Comando;
 import it.uniroma3.diadia2021.comandi.ComandoVai;
@@ -22,21 +23,22 @@ public class ComandoVaiTest {
 	private Comando comandoVai;
 	private Partita partita;
 	private Stanza stanzaDiPartenza;
+	private Labirinto labirinto;
 
 	@Before
 	public void setUp() throws Exception {
 		this.comandoVai = new ComandoVai();
 		this.comandoVai.setIO(new IOConsole());
-		this.partita = new Partita();
+		this.partita = new Partita(this.labirinto);
 		this.stanzaDiPartenza = new Stanza(PARTENZA);
-		this.partita.getLabirinto().setStanzaCorrente(stanzaDiPartenza);
+		this.partita.getLabirinto().setStanzaIniziale(stanzaDiPartenza);
 	}
 
 	@Test
 	public void testEseguiStanzaNonPresente() {
 		this.comandoVai.setParametro(DIREZIONE);
 		this.comandoVai.esegui(partita);
-		assertEquals(PARTENZA, this.partita.getLabirinto().getStanzaCorrente().getNome());
+		assertEquals(PARTENZA, this.partita.getLabirinto().getStanzaIniziale().getNome());
 	}
 
 	@Test
@@ -45,7 +47,7 @@ public class ComandoVaiTest {
 		this.stanzaDiPartenza.impostaStanzaAdiacente(DIREZIONE, destinazione);
 		this.comandoVai.setParametro(DIREZIONE);
 		this.comandoVai.esegui(partita);
-		assertEquals("destinazione", this.partita.getLabirinto().getStanzaCorrente().getNome());
+		assertEquals("destinazione", this.partita.getLabirinto().getStanzaIniziale().getNome());
 	}
 	
 	@Test

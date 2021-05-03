@@ -22,7 +22,7 @@ public class ComandoPosa implements Comando {
 			}
 			else {
 				Attrezzo attrezzoAppoggio = partita.getPlayer().getSatchel().getAttrezzo(attrezzo);
-                partita.getLabirinto().getStanzaCorrente().addAttrezzo(attrezzoAppoggio);
+                partita.getLabirinto().getStanzaIniziale().addAttrezzo(attrezzoAppoggio);
                 partita.getPlayer().getSatchel().removeAttrezzo(attrezzo);
 				this.io.mostraMessaggio("attrezzo posato");
 			}

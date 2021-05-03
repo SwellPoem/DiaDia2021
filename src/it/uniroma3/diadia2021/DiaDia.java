@@ -1,6 +1,8 @@
 package it.uniroma3.diadia2021;
 
 
+import it.uniroma3.diadia2021.ambienti.Labirinto;
+import it.uniroma3.diadia2021.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia2021.comandi.Comando;
 import it.uniroma3.diadia2021.comandi.FabbricaDiComandiFisarmonica;
 import it.uniroma3.diadia2021.comandi.FabbricaDiComandi;
@@ -29,8 +31,8 @@ public class DiaDia {
 	private Partita partita;
 	private IO io;
 
-	public DiaDia(IO io) {
-		this.partita = new Partita();
+	public DiaDia(Labirinto labirinto, IO io) {
+		this.partita = new Partita(labirinto);
 		this.io = io;
 	}
 
@@ -58,7 +60,41 @@ public class DiaDia {
 	
 	public static void main(String[] argc) {
 		IO io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
+		Labirinto labirinto = new LabirintoBuilder()
+				//add delle stanze
+				.addStanzaIniziale("atrio").addAttrezzo("osso", 1)
+				.addStanzaVincente("biblioteca")
+				.addStanza("mensa").addAttrezzo("lanterna", 3)
+				.addStanzaBuia("aula N11", "lanterna").addAttrezzo("grimaldello", 1)
+				.addStanzaMagica("laboratorio").addAttrezzo("spada", 3)
+				.addStanzaBloccata("aula N10", "grimaldello", "est")
+				//add delle adiacenze
+				//atrio
+				.addAdiacente("atrio", "mensa", "nord")
+				.addAdiacente("atrio", "aula N10", "sud")
+				.addAdiacente("atrio", "aula N11", "est")
+				.addAdiacente("atrio", "laboratorio", "ovest")
+				//aula n10
+				.addAdiacente("aula N10", "atrio", "nord")
+				.addAdiacente("aula N10", "aula N11", "sud")
+				.addAdiacente("aula N10", "biblioteca", "est")
+				//aula n11
+				.addAdiacente("aula N11", "aula N10", "nord")
+				.addAdiacente("aula N11", "atrio", "ovest")
+				.addAdiacente("aula N11", "laboratorio", "est")
+				//laboratorio
+				.addAdiacente("laboratorio", "aula N11", "ovest")
+				.addAdiacente("laboratorio", "atrio", "est")
+				//mensa
+				.addAdiacente("mensa", "atrio", "sud")
+				//biblioteca (essendo la stanza vincente una volta entrati in biblioteca finisce il gioco
+				//quindi non servirebbe mettere l'adiacenza da biblioteca ad altre stanze
+//				.addAdiacente("biblioteca", "atrio", "sud")
+//				.addAdiacente("biblioteca", "laboratorio", "nord")
+				//getLabirinto
+				.getLabirinto();
+		
+		DiaDia gioco = new DiaDia(labirinto, io);
 		gioco.gioca();
 	}
 

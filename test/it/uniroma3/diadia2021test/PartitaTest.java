@@ -7,34 +7,36 @@ import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia2021.Partita;
+import it.uniroma3.diadia2021.ambienti.Labirinto;
 import it.uniroma3.diadia2021.ambienti.Stanza;
 
 public class PartitaTest {
 
 	private Partita partita;
+	private Labirinto labirinto;
 
 
 	@Before
 	public void setUp() {
-		this.partita = new Partita();
+		this.partita = new Partita(this.labirinto);
 	}
 
 	@Test
 	public void testPartitaVinta() {
-		this.partita.getLabirinto().setStanzaCorrente(this.partita.getLabirinto().getStanzaVincente());
+		this.partita.getLabirinto().setStanzaIniziale(this.partita.getLabirinto().getStanzaVincente());
 		assertTrue(this.partita.vinta());
 	}
 	
 	@Test
 	public void testPartitaNonVinta() {
-		this.partita.getLabirinto().setStanzaCorrente(new Stanza("inutile"));
+		this.partita.getLabirinto().setStanzaIniziale(new Stanza("inutile"));
 		assertFalse(this.partita.vinta());
 		
 	}
 
 	@Test
 	public void testPartitaFinita() {
-		this.partita.getLabirinto().setStanzaCorrente(this.partita.getLabirinto().getStanzaVincente());
+		this.partita.getLabirinto().setStanzaIniziale(this.partita.getLabirinto().getStanzaVincente());
 		assertTrue(this.partita.isFinita());
 	}
 	

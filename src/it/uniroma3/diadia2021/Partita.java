@@ -1,16 +1,8 @@
 package it.uniroma3.diadia2021;
 
 import it.uniroma3.diadia2021.ambienti.Labirinto;
-import it.uniroma3.diadia2021.ambienti.Stanza;
 import it.uniroma3.diadia2021.giocatore.Giocatore;
 
-/**
- * Questa classe modella una partita del gioco
- *
- * @author  docente di POO
- * @see Stanza
- * @version base
- */
 
 public class Partita {
 
@@ -19,8 +11,8 @@ public class Partita {
 	private Giocatore player;
 	
 	
-	public Partita(){
-		this.labirinto = new Labirinto();
+	public Partita(Labirinto labirinto){
+		this.labirinto = labirinto;
 		this.finita = false;
 		this.player = new Giocatore();
 	}
@@ -35,7 +27,7 @@ public class Partita {
 	 * @return vero se partita vinta
 	 */
 	public boolean vinta() {
-		return this.getLabirinto().getStanzaCorrente().equals(this.getLabirinto().getStanzaVincente());
+		return this.getLabirinto().getStanzaIniziale().equals(this.getLabirinto().getStanzaVincente());
 		
 	}
 

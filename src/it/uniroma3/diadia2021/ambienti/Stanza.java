@@ -62,7 +62,6 @@ public class Stanza {
 	}
 
 	
-	
 	public String toString() {
 		StringBuilder risultato = new StringBuilder();
 		risultato.append(this.nome);

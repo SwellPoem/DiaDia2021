@@ -12,7 +12,7 @@ public class ComandoVai implements Comando {
 	
 	@Override
 	public void esegui(Partita partita) {
-		Stanza stanzaCorrente = partita.getLabirinto().getStanzaCorrente();
+		Stanza stanzaCorrente = partita.getLabirinto().getStanzaIniziale();
 		Stanza prossimaStanza;
 		
 		if(direzione==null) {
@@ -24,10 +24,10 @@ public class ComandoVai implements Comando {
 			this.io.mostraMessaggio("Direzione inesistente");
 			return;
 		}
-		partita.getLabirinto().setStanzaCorrente(prossimaStanza);
+		partita.getLabirinto().setStanzaIniziale(prossimaStanza);
 		int cfu = partita.getPlayer().getCfu();
 		partita.getPlayer().setCfu(--cfu);
-		this.io.mostraMessaggio("sei in: " + partita.getLabirinto().getStanzaCorrente().getNome());
+		this.io.mostraMessaggio("sei in: " + partita.getLabirinto().getStanzaIniziale().getNome());
 	}
 
 	@Override
