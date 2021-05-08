@@ -1,15 +1,14 @@
 package it.uniroma3.diadia2021.giocatoretest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +28,6 @@ public class BorsaTest {
 	@Before
 	public void setUp() {
 		this.borsa = new Borsa(PESO_MAX);
-
 	}
 
 	@Test
@@ -45,21 +43,64 @@ public class BorsaTest {
 	}
 	
 	@Test
+	public void testAttrezzoTroppoPesante() {
+		Attrezzo pesante = new Attrezzo("pesante", PESO_MAX+1);
+		assertFalse(this.borsa.addAttrezzo(pesante));
+	}
+	
+	@Test
+	public void testGetAttrezzoBorsaVuota() {
+		assertNull(this.borsa.getAttrezzo(ATTREZZO));
+	}
+	
+	@Test
+	public void testGetPesoMax() {
+		assertEquals(PESO_MAX, this.borsa.getPesoMax());
+	}
+	
+	@Test
+	public void testGetPesoIniziale0() {
+		assertEquals(0, this.borsa.getPeso());
+	}
+	
+	@Test
+	public void testBorsaVuotaIniziale() {
+		assertTrue(this.borsa.isEmpty());
+	}
+	
+	@Test
+	public void testRemoveAttrezzo() {
+		Attrezzo singolo = new Attrezzo(ATTREZZO, 2);
+		this.borsa.addAttrezzo(singolo);
+		assertEquals(singolo, this.borsa.getAttrezzo(ATTREZZO));
+		this.borsa.removeAttrezzo(ATTREZZO);
+		assertTrue(this.borsa.isEmpty());
+		assertEquals(0, this.borsa.getPeso());
+	}
+ 	
+	@Test
 	public void testGetContenutoOrdinatoPerPeso() {
 		Attrezzo piombo = new Attrezzo(PIOMBO, 10);
-		Attrezzo libro = new Attrezzo(LIBRO, 5);
+		Attrezzo spada = new Attrezzo(SPADA, 7);
+		Attrezzo libro = new Attrezzo(LIBRO, 2);
 		this.borsa.addAttrezzo(piombo);
 		this.borsa.addAttrezzo(libro);
+		this.borsa.addAttrezzo(spada);
 		assertEquals(libro, this.borsa.getContenutoOrdinatoPerPeso().get(0));
+		assertEquals(spada, this.borsa.getContenutoOrdinatoPerPeso().get(1));
+		
 	}
 	
 	@Test
 	public void testGetContenutoOrdinatoPerNome() {
 		Attrezzo piombo = new Attrezzo(PIOMBO, 10);
-		Attrezzo libro = new Attrezzo(LIBRO, 5);
-		this.borsa.addAttrezzo(piombo);
+		Attrezzo spada = new Attrezzo(SPADA, 7);
+		Attrezzo libro = new Attrezzo(LIBRO, 3);
+		this.borsa.addAttrezzo(spada);
 		this.borsa.addAttrezzo(libro);
+		this.borsa.addAttrezzo(piombo);
 		assertEquals(libro, this.borsa.getContenutoOrdinatoPerNome().first());
+		assertEquals(spada, this.borsa.getContenutoOrdinatoPerNome().last());
 	}
 	
 	@Test
@@ -75,6 +116,18 @@ public class BorsaTest {
 		mappa.put(5, Collections.singleton(spada));
 		mappa.put(10, Collections.singleton(piombo));
 		assertEquals(mappa, this.borsa.getContenutoRaggruppatoPerPeso());
+	}
+	
+	@Test
+	public void testGetSortedSetOrdinatoPerPeso() {
+		Attrezzo piombo = new Attrezzo(PIOMBO, 10);
+		Attrezzo spada = new Attrezzo(SPADA, 7);
+		Attrezzo libro = new Attrezzo(LIBRO, 3);
+		this.borsa.addAttrezzo(piombo);
+		this.borsa.addAttrezzo(spada);
+		this.borsa.addAttrezzo(libro);
+		assertEquals(libro, this.borsa.getSortedSetOrdinatoPerPeso().first());
+		assertEquals(piombo, this.borsa.getSortedSetOrdinatoPerPeso().last());
 	}
 	
 }
