@@ -1,5 +1,7 @@
 package it.uniroma3.diadia2021.fixture;
 
+import java.util.List;
+
 import it.uniroma3.diadia2021.DiaDia;
 import it.uniroma3.diadia2021.ambienti.Labirinto;
 import it.uniroma3.diadia2021.ambienti.LabirintoBuilder;
@@ -9,7 +11,7 @@ import it.uniroma3.diadia2021test.IOSimulator;
 
 public class Fixture {
 
-	public static IOSimulator creaSimulazionePartitaEGioca(String ...righeDaLeggere) {
+	public static IOSimulator creaSimulazionePartitaEGioca(List<String> righeDaLeggere) {
 		IOSimulator io = new IOSimulator(righeDaLeggere);
 		Labirinto labirinto = new LabirintoBuilder()
 				//add delle stanze

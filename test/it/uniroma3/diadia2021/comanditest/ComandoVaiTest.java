@@ -3,6 +3,9 @@ package it.uniroma3.diadia2021.comanditest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,7 +55,9 @@ public class ComandoVaiTest {
 	
 	@Test
 	public void testPartitaComandoVai() {
-		String[] comandiDaEseguire = {"vai sud", "fine"};
+		List<String> comandiDaEseguire = new ArrayList<String>();
+		comandiDaEseguire.add("vai sud");
+		comandiDaEseguire.add("fine");
 		IOSimulator io = Fixture.creaSimulazionePartitaEGioca(comandiDaEseguire);
 		assertTrue(io.hasNextMessaggio());
 		assertEquals(DiaDia.MESSAGGIO_BENVENUTO, io.nextMessaggio());
