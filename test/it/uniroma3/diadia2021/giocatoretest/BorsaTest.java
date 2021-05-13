@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -111,9 +112,12 @@ public class BorsaTest {
 		this.borsa.addAttrezzo(piombo);
 		this.borsa.addAttrezzo(spada);
 		this.borsa.addAttrezzo(libro);
+		
 		Map<Integer, Set<Attrezzo>> mappa = new HashMap<Integer, Set<Attrezzo>>();
-		mappa.put(5, Collections.singleton(libro));
-		mappa.put(5, Collections.singleton(spada));
+		Set<Attrezzo> set = new TreeSet<Attrezzo>();
+		set.add(libro);
+		set.add(spada);
+		mappa.put(5, set);
 		mappa.put(10, Collections.singleton(piombo));
 		assertEquals(mappa, this.borsa.getContenutoRaggruppatoPerPeso());
 	}
